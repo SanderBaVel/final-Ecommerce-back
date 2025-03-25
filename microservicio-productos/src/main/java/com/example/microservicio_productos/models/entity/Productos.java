@@ -7,7 +7,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -34,11 +36,13 @@ public class Productos {
 	private String descripcion;
 	
 	@Column(name = "PRECIO ")
-	@NotBlank(message = "El precio es obligatorio")
+	 @Min(value = 0, message = "El precio no puede ser negativo")
+	@NotNull(message = "El precio  es obligatorio")
 	private Long precio;
 	
 	@Column(name = "STOCK  ")
-	@NotBlank(message = "El stock es obligatorio")
+	 @Min(value = 0, message = "El precio no puede ser negativo")
+  @NotNull(message = "El stock  es obligatorio")
 	private Long stock;
 
 	public Long getId() {

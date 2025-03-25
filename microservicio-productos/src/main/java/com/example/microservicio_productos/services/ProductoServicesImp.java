@@ -5,15 +5,20 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import com.example.microservicio_productos.controllers.ProductoController;
 import com.example.microservicio_productos.models.entity.Productos;
 import com.example.microservicio_productos.models.repository.ProductosRepository;
 
 @Service
 public class ProductoServicesImp implements ProductosServices {
 
+    
+
 	@Autowired
 	protected ProductosRepository produRepository;
+
+  
 	
 	@Override
 	public List<Productos> listar() {
@@ -23,25 +28,43 @@ public class ProductoServicesImp implements ProductosServices {
 
 	@Override
 	public Optional<Productos> obtenerPorId(Long id) {
-		// TODO Auto-generated method stub
-		return Optional.empty();
+	
+		return produRepository.findById(id);
 	}
 
 	@Override
 	public Productos crear(Productos entity) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return produRepository.save(entity);
 	}
 
 	@Override
+	@Transactional
 	public Optional<Productos> eliminarPorId(Long id) {
-		// TODO Auto-generated method stub
+		Optional<Productos> entity = produRepository.findById(id);
+		if(entity.isPresent()) {
+			produRepository.deleteById(id);
+			return entity;
+			
+		}
 		return Optional.empty();
 	}
 
 	@Override
 	public Productos actualizar(Productos productos, Long id) {
-		// TODO Auto-generated method stub
+		Optional<Productos> productoss = produRepository.findById(id);
+		if(productoss.isPresent()) {
+			Productos productosDb = productoss.get();
+			productosDb.setNombre(productos.getNombre());
+			productosDb.setDescripcion(productos.getDescripcion());
+			productosDb.setPrecio(productos.getPrecio());
+			productosDb.setStock(productos.getStock());
+			
+			return produRepository.save(productosDb);
+		}
+		
+		
+	
 		return null;
 	}
 
