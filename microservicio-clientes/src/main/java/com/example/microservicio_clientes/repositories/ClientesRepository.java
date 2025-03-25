@@ -6,4 +6,6 @@ import com.example.microservicio_clientes.models.entities.Clientes;
 
 public interface ClientesRepository extends JpaRepository<Clientes, Long> {
 
+	boolean existsByEmail(String email);
+	boolean existsByTelefono(String telefono);
 }

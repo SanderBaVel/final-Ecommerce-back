@@ -12,4 +12,6 @@ public interface ClientesServices{
 	Clientes crear (Clientes entity);
 	Optional<Clientes> eliminarPorId(Long id);
 	Clientes actualizar(Clientes clientes, Long id);
+	boolean validareEmail(String email);
+	boolean validarTelefono(String Telefono);
 }

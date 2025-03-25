@@ -60,6 +60,16 @@ public class ClientesServicesImpl implements ClientesServices{
 		}
 		return null;
 	}
+
+	@Override
+	public boolean validareEmail(String email) {
+		return clientesRepository.existsByEmail(email);
+	}
+
+	@Override
+	public boolean validarTelefono(String Telefono) {
+	    return clientesRepository.existsByTelefono(Telefono);
+	}
 	
 
 	

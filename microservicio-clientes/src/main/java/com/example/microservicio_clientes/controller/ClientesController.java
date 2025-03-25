@@ -1,5 +1,6 @@
 package com.example.microservicio_clientes.controller;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,11 +45,22 @@ public class ClientesController {
 	    }
 
 	    @PostMapping
-	    public ResponseEntity<?> create(@Valid @RequestBody Clientes entity, BindingResult result) {
+	    public ResponseEntity<?> create(@Valid @RequestBody Clientes clientes, BindingResult result) {
 	        if (result.hasErrors()) {
 	            return this.validar(result);
 	        }
-	        Clientes entityDb = service.crear(entity);
+
+	        
+	        if (service.validareEmail(clientes.getEmail())) {
+	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Email Ya existe"));
+	        }
+
+	        if (service.validarTelefono(clientes.getTelefono())) {
+	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Telefono ya existe"));
+	        }
+	        
+	        
+	        Clientes entityDb = service.crear(clientes);
 	        return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
 	    }
 	    
@@ -68,6 +80,21 @@ public class ClientesController {
 			if(result.hasErrors()) {
 				return this.validar(result);
 			}
+			
+	        if (result.hasErrors()) {
+	            return this.validar(result);
+	        }
+
+	        
+	        if (service.validareEmail(clientes.getEmail())) {
+	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Email Ya existe"));
+	        }
+
+	        if (service.validarTelefono(clientes.getTelefono())) {
+	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Telefono ya existe"));
+	        }
+	        
+	        
 			Clientes clientesDb = service.actualizar(clientes, id);
 			if(clientesDb != null) {
 				return ResponseEntity.status(HttpStatus.CREATED).body(clientesDb);
@@ -75,8 +102,7 @@ public class ClientesController {
 			return ResponseEntity.notFound().build();
 		}
 		
-	   
-
+	  
 	    protected ResponseEntity<?> validar(BindingResult result) {
 	        Map<String, Object> errores = new HashMap<>();
 	        result.getFieldErrors().forEach(err -> {
