@@ -18,55 +18,19 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.microservicio_productos.models.entity.Productos;
+import com.example.microservicio_commons.controller.CommonController;
+import com.example.microservicio_commons.models.entity.Productos;
 import com.example.microservicio_productos.services.ProductosServices;
 
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/productos")
-public class ProductoController {
+public class ProductoController extends CommonController<Productos, ProductosServices>{
 	@Autowired
 	protected ProductosServices services;
 
-	@GetMapping 
-	public ResponseEntity<List> getAll(){
-		return ResponseEntity.ok(services.listar());
-	}
-	
-	@GetMapping("/{id}")
-	public ResponseEntity<Productos> getById(@PathVariable Long id){
-		Optional<Productos> entity = services.obtenerPorId(id);
-		if(entity.isPresent()) {
-			return ResponseEntity.ok(entity.get());
-			
-		}
-		return ResponseEntity.notFound().build();
-		
-	}
-	
-	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody Productos entity, BindingResult result){
-		
-		 if (result.hasErrors()) {
-	            return this.validar(result);
-	        }
-	        Productos entityDb = services.crear(entity);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
-		
-	}
-	
-	
-	 @DeleteMapping("/{id}")
-	    public ResponseEntity<Productos> delete(@PathVariable Long id){
-	    	Optional <Productos> entity = services.eliminarPorId(id);
-	    	if (entity.isPresent()) {
-	    		return ResponseEntity.ok().body(entity.get());
-	    	}
-	    	return ResponseEntity.notFound().build();
-			
-	    }
-	
+
 	  @PutMapping("/{id}")
 	    public ResponseEntity<?> actualizar(@Valid @RequestBody Productos producto,
 	                                        BindingResult result, @PathVariable Long id) {
@@ -79,15 +43,5 @@ public class ProductoController {
 			}
 			return ResponseEntity.notFound().build();
 		}
-	
-	 protected ResponseEntity<?> validar(BindingResult result) {
-	        Map<String, Object> errores = new HashMap<>();
-	        result.getFieldErrors().forEach(err -> {
-	            errores.put(err.getField(), err.getDefaultMessage());
-	        });
-	        return ResponseEntity.badRequest().body(errores);
-	    }
-	
-	
 	
 } 

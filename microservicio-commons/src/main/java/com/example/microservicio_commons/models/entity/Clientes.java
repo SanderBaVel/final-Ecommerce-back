@@ -1,9 +1,7 @@
-package com.example.microservicio_clientes.models.entities;
-
+package com.example.microservicio_commons.models.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
