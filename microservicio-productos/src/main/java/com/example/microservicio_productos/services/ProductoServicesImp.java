@@ -16,6 +16,7 @@ import com.example.microservicio_productos.models.repository.ProductosRepository
 public class ProductoServicesImp extends CommonServiceImpl<Productos, ProductosRepository> implements ProductosServices {
 
 	@Override
+	@Transactional
 	public Productos actualizar(Productos productos, Long id) {
 		Optional<Productos> productoss = repository.findById(id);
 		if(productoss.isPresent()) {
