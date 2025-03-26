@@ -14,9 +14,11 @@ import com.example.microservicio_commons.services.CommonServiceImpl;
 
 
 @Service
+
 public class ClientesServicesImpl extends CommonServiceImpl<Clientes, ClientesRepository>  implements ClientesServices{
 
 	@Override
+	@Transactional
 	public Clientes actualizar(Clientes clientes, Long id) {
 		// TODO Auto-generated method stub
 		Optional <Clientes> optClientes = repository.findById(id);
