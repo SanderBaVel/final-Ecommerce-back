@@ -11,6 +11,7 @@ import com.example.microservicio_commons.services.CommonServiceImpl;
 import com.example.microservicio_pedidos.clients.ClienteClient;
 import com.example.microservicio_pedidos.clients.ProductoClient;
 import com.example.microservicio_pedidos.dto.PedidoDTO;
+import com.example.microservicio_pedidos.dto.PedidoEditarDTO;
 import com.example.microservicio_pedidos.mappers.PedidoMapper;
 import com.example.microservicio_pedidos.models.enums.EstadoPedido;
 import com.example.microservicio_pedidos.repository.PedidoRepository;
@@ -32,6 +33,19 @@ public class PedidoServiceImpl extends CommonServiceImpl<Pedido, PedidoRepositor
 	public Pedido agregarPedido(PedidoDTO pedidoDTO) {
 		return repository.save(pedidoMapper.dtotoEntity(pedidoDTO));
 		
+	}
+	
+	@Transactional
+	public Pedido editarPedido(Long id, PedidoEditarDTO dto) {
+		Optional<Pedido> optPedido = repository.findById(id);
+		if(optPedido.isEmpty()) {
+			throw new RuntimeException("Pedido no encontrado con ID: " +id);
+		}
+		
+		Pedido pedido = optPedido.get();
+		pedido.setEstado(dto.getEstado());
+		
+		return repository.save(pedido);
 	}
 
 	@Override

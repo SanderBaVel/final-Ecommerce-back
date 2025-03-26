@@ -40,7 +40,7 @@ public class PedidoMapper {
 		System.out.println(dto);
 		Pedido pedido = new Pedido();
 		pedido.setCliente(optClinte.get());
-		pedido.setEstado("1");
+		pedido.setEstado(dto.getEstado());
 		
 		
         List<Productos> productos = obtenerProductos(dto.getProductosIds());

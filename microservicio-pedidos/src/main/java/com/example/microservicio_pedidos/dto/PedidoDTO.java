@@ -9,14 +9,14 @@ public class PedidoDTO {
 
 	private Long idCliente;
 	private List<Long> productosIds;
-	private Long estado;
+	private String estado;
 	
 	
 	public PedidoDTO() {
 		this.productosIds = new ArrayList<>();
 	}
 	
-	public PedidoDTO(Long idCliente,  Long estado) {
+	public PedidoDTO(Long idCliente,  String estado) {
 		this.idCliente = idCliente;
 		this.productosIds = new ArrayList<>();
 		this.estado = estado;
@@ -38,11 +38,11 @@ public class PedidoDTO {
 		this.productosIds = productosIds;
 	}
 
-	public Long getEstado() {
+	public String getEstado() {
 		return estado;
 	}
 
-	public void setEstado(Long estado) {
+	public void setEstado(String estado) {
 		this.estado = estado;
 	}
 

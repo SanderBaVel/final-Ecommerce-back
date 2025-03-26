@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.microservicio_commons.controller.CommonController;
 import com.example.microservicio_commons.models.entity.Pedido;
 import com.example.microservicio_pedidos.dto.PedidoDTO;
+import com.example.microservicio_pedidos.dto.PedidoEditarDTO;
 import com.example.microservicio_pedidos.mappers.PedidoMapper;
 import com.example.microservicio_pedidos.models.enums.EstadoPedido;
 import com.example.microservicio_pedidos.services.PedidoService;
@@ -39,10 +41,16 @@ public class PedidoController extends CommonController<Pedido, PedidoService>{
 	private PedidoMapper mapper;
 	
 	@PostMapping("/agregar")
-   public ResponseEntity<Pedido> agregaPEdido(@RequestBody PedidoDTO pedidoDto){
+   public ResponseEntity<Pedido> agregaPedido(@RequestBody PedidoDTO pedidoDto){
 	   return ResponseEntity.ok(pedidoService.agregarPedido(pedidoDto));
 	   
    }
+	
+	@PutMapping("/modificar/{id}")
+	   public ResponseEntity<Pedido> modificaPedido(@PathVariable Long id, @RequestBody PedidoEditarDTO dto){
+		   return ResponseEntity.ok(pedidoService.editarPedido(id, dto));
+		   
+	   }
 
 	
 
