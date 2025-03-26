@@ -25,7 +25,6 @@ import jakarta.validation.Valid;
 
 
 @RestController
-@RequestMapping("/api/clientes")
 public class ClientesController extends CommonController<Clientes, ClientesServices>{
 	   @Autowired
 	    protected ClientesServices service;

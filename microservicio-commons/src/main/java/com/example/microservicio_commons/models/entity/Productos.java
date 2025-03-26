@@ -1,10 +1,16 @@
 package com.example.microservicio_commons.models.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -45,6 +51,10 @@ public class Productos {
   @NotNull(message = "El stock  es obligatorio")
 	private Long stock;
 
+	  @JsonIgnoreProperties("productos") // Para evitar recursión infinita
+	    @ManyToMany(mappedBy = "productos") // Hace referencia al campo en Pedido
+	    private List<Pedido> pedidos = new ArrayList<>();
+	  
 	public Long getId() {
 		return id;
 	}

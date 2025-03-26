@@ -25,7 +25,6 @@ import com.example.microservicio_productos.services.ProductosServices;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/api/productos")
 public class ProductoController extends CommonController<Productos, ProductosServices>{
 	@Autowired
 	protected ProductosServices services;
