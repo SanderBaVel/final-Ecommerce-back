@@ -17,63 +17,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.microservicio_clientes.models.entities.Clientes;
 import com.example.microservicio_clientes.services.ClientesServices;
+import com.example.microservicio_commons.controller.CommonController;
+import com.example.microservicio_commons.models.entity.Clientes;
 
 import jakarta.validation.Valid;
 
 
 @RestController
 @RequestMapping("/api/clientes")
-public class ClientesController {
+public class ClientesController extends CommonController<Clientes, ClientesServices>{
 	   @Autowired
 	    protected ClientesServices service;
-	   
 	    
-	    @GetMapping
-	    public ResponseEntity<List> getAll(){
-	        return ResponseEntity.ok(service.listar());
-	    }
-	    
-	    @GetMapping("/{id}")
-	    public ResponseEntity<Clientes> getById(@PathVariable Long id){
-	        Optional<Clientes> entity = service.obtenerPorId(id);
-	        if(entity.isPresent()) {
-	            return ResponseEntity.ok(entity.get());
-	        }
-	        return ResponseEntity.notFound().build();
-	    }
-
-	    @PostMapping
-	    public ResponseEntity<?> create(@Valid @RequestBody Clientes clientes, BindingResult result) {
-	        if (result.hasErrors()) {
-	            return this.validar(result);
-	        }
-
-	        
-	        if (service.validareEmail(clientes.getEmail())) {
-	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Email Ya existe"));
-	        }
-
-	        if (service.validarTelefono(clientes.getTelefono())) {
-	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Telefono ya existe"));
-	        }
-	        
-	        
-	        Clientes entityDb = service.crear(clientes);
-	        return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
-	    }
-	    
-	    @DeleteMapping("/{id}")
-	    public ResponseEntity<Clientes> delete(@PathVariable Long id){
-	    	Optional <Clientes> entity = service.eliminarPorId(id);
-	    	if (entity.isPresent()) {
-	    		return ResponseEntity.ok().body(entity.get());
-	    	}
-	    	return ResponseEntity.notFound().build();
-			
-	    }
-	    
+	
 		@PutMapping("/{id}")
 		public ResponseEntity<?> actualizar(@Valid @RequestBody Clientes clientes,
 				BindingResult result, @PathVariable Long id){
@@ -103,11 +60,5 @@ public class ClientesController {
 		}
 		
 	  
-	    protected ResponseEntity<?> validar(BindingResult result) {
-	        Map<String, Object> errores = new HashMap<>();
-	        result.getFieldErrors().forEach(err -> {
-	            errores.put(err.getField(), err.getDefaultMessage());
-	        });
-	        return ResponseEntity.badRequest().body(errores);
-	    }
+	   
 }
