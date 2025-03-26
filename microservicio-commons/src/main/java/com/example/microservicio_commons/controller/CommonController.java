@@ -19,6 +19,7 @@ import com.example.microservicio_commons.services.CommonService;
 
 import jakarta.validation.Valid;
 
+
 public class CommonController<E, S extends CommonService<E>> {
 	@Autowired
 	protected S service;

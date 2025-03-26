@@ -24,9 +24,8 @@ import com.example.microservicio_commons.models.entity.Clientes;
 
 import jakarta.validation.Valid;
 
-//@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
-@RequestMapping("/api/clientes")
 public class ClientesController extends CommonController<Clientes, ClientesServices>{
 	   @Autowired
 	    protected ClientesServices service;
