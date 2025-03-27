@@ -119,6 +119,12 @@ public class Clientes {
 	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
 	}
+
+	@Override
+	public String toString() {
+		return "Clientes [id_cliente=" + id_cliente + ", nombre=" + nombre + ", apellidos=" + apellidos + ", email="
+				+ email + ", telefono=" + telefono + ", direccion=" + direccion + ", pedidos=" + pedidos + "]";
+	}
 	
 	
 	

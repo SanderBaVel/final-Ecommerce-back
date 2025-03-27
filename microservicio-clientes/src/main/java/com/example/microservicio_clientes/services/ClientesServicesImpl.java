@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.example.microservicio_clientes.controller.ClientesController;
+import com.example.microservicio_clientes.dto.ClienteDTO;
+import com.example.microservicio_clientes.mapper.ClienteMapper;
 import com.example.microservicio_clientes.repositories.ClientesRepository;
 import com.example.microservicio_commons.models.entity.Clientes;
 import com.example.microservicio_commons.services.CommonServiceImpl;
@@ -17,6 +19,9 @@ import com.example.microservicio_commons.services.CommonServiceImpl;
 
 public class ClientesServicesImpl extends CommonServiceImpl<Clientes, ClientesRepository>  implements ClientesServices{
 
+	@Autowired
+	private ClienteMapper clienteMapper;
+	
 	@Override
 	@Transactional
 	public Clientes actualizar(Clientes clientes, Long id) {
@@ -45,6 +50,11 @@ public class ClientesServicesImpl extends CommonServiceImpl<Clientes, ClientesRe
 	    return repository.existsByTelefono(Telefono);
 	}
 	
+	
+	public Clientes agregarCliente(ClienteDTO clienteDTO) {
+	
+		return clienteMapper.dtoToEntity(clienteDTO);
+	}
 
 	
 	

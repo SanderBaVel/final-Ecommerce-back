@@ -52,6 +52,4 @@ public class PedidoController extends CommonController<Pedido, PedidoService>{
 		   
 	   }
 
-	
-
 }

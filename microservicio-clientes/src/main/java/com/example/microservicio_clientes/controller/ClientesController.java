@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.microservicio_clientes.dto.ClienteDTO;
 import com.example.microservicio_clientes.services.ClientesServices;
+import com.example.microservicio_clientes.services.ClientesServicesImpl;
 import com.example.microservicio_commons.controller.CommonController;
 import com.example.microservicio_commons.models.entity.Clientes;
 
@@ -28,36 +31,41 @@ import jakarta.validation.Valid;
 @RestController
 public class ClientesController extends CommonController<Clientes, ClientesServices>{
 	   @Autowired
-	    protected ClientesServices service;
+	    protected ClientesServicesImpl service;
 	    
+	   @PostMapping("/crear")
+	   public ResponseEntity<?> agregarCliente(@RequestBody ClienteDTO dto){
+		   System.out.println(dto);
+		   return ResponseEntity.status(HttpStatus.OK).build();
+	   }
 	
-		@PutMapping("/{id}")
-		public ResponseEntity<?> actualizar(@Valid @RequestBody Clientes clientes,
-				BindingResult result, @PathVariable Long id){
-			if(result.hasErrors()) {
-				return this.validar(result);
-			}
-			
-	        if (result.hasErrors()) {
-	            return this.validar(result);
-	        }
-
-	        
-	        if (service.validareEmail(clientes.getEmail())) {
-	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Email Ya existe"));
-	        }
-
-	        if (service.validarTelefono(clientes.getTelefono())) {
-	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Telefono ya existe"));
-	        }
-	        
-	        
-			Clientes clientesDb = service.actualizar(clientes, id);
-			if(clientesDb != null) {
-				return ResponseEntity.status(HttpStatus.CREATED).body(clientesDb);
-			}
-			return ResponseEntity.notFound().build();
-		}
+//		@PutMapping("/{id}")
+//		public ResponseEntity<?> actualizar(@Valid @RequestBody ClienteDTO clientes,
+//				BindingResult result, @PathVariable Long id){
+//			if(result.hasErrors()) {
+//				return this.validar(result);
+//			}
+//			
+//	        if (result.hasErrors()) {
+//	            return this.validar(result);
+//	        }
+//
+//	        
+//	        if (service.validareEmail(clientes.getEmail())) {
+//	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Email Ya existe"));
+//	        }
+//
+//	        if (service.validarTelefono(clientes.getTelefono())) {
+//	            return ResponseEntity.badRequest().body(Collections.singletonMap("error", "Telefono ya existe"));
+//	        }
+//	        
+//	        
+//			Clientes clientesDb = service.actualizar(clientes, id);
+//			if(clientesDb != null) {
+//				return ResponseEntity.status(HttpStatus.CREATED).body(clientesDb);
+//			}
+//			return ResponseEntity.notFound().build();
+//		}
 		
 	  
 	   

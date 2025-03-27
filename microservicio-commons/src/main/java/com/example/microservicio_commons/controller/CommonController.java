@@ -38,15 +38,15 @@ public class CommonController<E, S extends CommonService<E>> {
 	}
 	
 	
-	@PostMapping
-	public ResponseEntity<?> create(@Valid @RequestBody E entity, BindingResult result){
-		System.out.println("entidasddss" + entity);
-		if(result.hasErrors()) {
-			return this.validar(result);
-		}
-		E entityDb = service.crear(entity);
-		return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
-	}
+//	@PostMapping
+//	public ResponseEntity<?> create(@Valid @RequestBody E entity, BindingResult result){
+//		System.out.println("entidasddss" + entity);
+//		if(result.hasErrors()) {
+//			return this.validar(result);
+//		}
+//		E entityDb = service.crear(entity);
+//		return ResponseEntity.status(HttpStatus.CREATED).body(entityDb);
+//	}
 	
 	@DeleteMapping("/{id}")
 	public ResponseEntity<E> delete(@PathVariable Long id){
