@@ -3,12 +3,14 @@ package com.example.microservicio_pedidos.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.microservicio_clientes.dto.ClienteDTO;
 import com.example.microservicio_commons.models.entity.Productos;
+import com.example.microservicio_productos.dto.ProductosDto;
 
 public class PedidoDTO {
-
-	private Long idCliente;
-	private List<Long> productosIds;
+	private Long id;
+	private ClienteDTO  cliente;
+	private List<ProductosDto> productosIds;
 	private String estado;
 	
 	
@@ -16,26 +18,73 @@ public class PedidoDTO {
 		this.productosIds = new ArrayList<>();
 	}
 	
-	public PedidoDTO(Long idCliente,  String estado) {
-		this.idCliente = idCliente;
-		this.productosIds = new ArrayList<>();
+	
+	
+	
+	
+
+
+
+
+	public PedidoDTO(Long id, ClienteDTO cliente, List<ProductosDto> productosIds, String estado) {
+		super();
+		this.id = id;
+		this.cliente = cliente;
+		this.productosIds = productosIds;
 		this.estado = estado;
 	}
+
+
+
+
+
+
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
 	
-	public Long getIdCliente() {
-		return idCliente;
+
+
+
+	public ClienteDTO getCliente() {
+		return cliente;
 	}
 
-	public void setIdCliente(Long idCliente) {
-		this.idCliente = idCliente;
+
+
+
+
+
+
+
+
+	public void setCliente(ClienteDTO clienteDTO) {
+		this.cliente = clienteDTO;
 	}
 
-	public List<Long> getProductosIds() {
+
+
+
+
+
+
+
+
+	public List<ProductosDto> getProductosIds() {
 		return productosIds;
 	}
 
-	public void setProductosIds(List<Long> productosIds) {
-		this.productosIds = productosIds;
+	public void setProductosIds(List<ProductosDto> productosDTO) {
+		this.productosIds = productosDTO;
 	}
 
 	public String getEstado() {
@@ -48,7 +97,7 @@ public class PedidoDTO {
 
 	@Override
 	public String toString() {
-		return "PedidoDTO [idCliente=" + idCliente + ", productosIds=" + productosIds + ", estado=" + estado + "]";
+		return "PedidoDTO [idCliente=" + cliente + ", productosIds=" + productosIds + ", estado=" + estado + "]";
 	}
 	
 	

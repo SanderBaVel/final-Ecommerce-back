@@ -18,7 +18,7 @@ import jakarta.validation.constraints.Size;
 
 public class ClienteDTO {
 
-	
+	private Long id;
 	private String nombre;
 	
 	private String apellidos;
@@ -36,19 +36,39 @@ public class ClienteDTO {
 	}
 
 
-	public ClienteDTO(
-			 String nombre,
-			 String apellidos,
-			 String email,
-			 String telefono,
-			 String direccion) {
+	
+
+
+	public ClienteDTO(Long id, String nombre, String apellidos, String email, String telefono, String direccion,
+			List<Long> pedidos) {
+		
+		this.id = id;
 		this.nombre = nombre;
 		this.apellidos = apellidos;
 		this.email = email;
 		this.telefono = telefono;
 		this.direccion = direccion;
-		this.pedidos = new ArrayList<>();
+		this.pedidos = pedidos;
 	}
+
+
+
+
+
+	public Long getId() {
+		return id;
+	}
+
+
+
+
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+
+
 
 
 	public String getNombre() {

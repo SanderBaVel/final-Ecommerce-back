@@ -51,5 +51,11 @@ public class PedidoController extends CommonController<Pedido, PedidoService>{
 		   return ResponseEntity.ok(pedidoService.editarPedido(id, dto));
 		   
 	   }
+	
+	
+	 @GetMapping("/listar")
+	    public ResponseEntity<List<PedidoDTO>> listarPedidos() {
+	        return ResponseEntity.ok(pedidoService.obtenerPedidosConClientesYProductos());
+	    }
 
 }

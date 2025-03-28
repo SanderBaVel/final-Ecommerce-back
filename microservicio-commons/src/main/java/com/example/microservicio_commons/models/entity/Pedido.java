@@ -6,13 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,7 +33,7 @@ public class Pedido {
 	@SequenceGenerator(name = "pedidos_seq", sequenceName = "pedidos_seq", allocationSize = 1)
     private Long id;
     
-	@JsonBackReference
+    @JsonBackReference
 	@JsonIgnoreProperties({"handler", "hibernateLazyInitializer"})
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ID_CLIENTE", referencedColumnName = "ID_CLIENTE")	
@@ -47,8 +46,8 @@ public class Pedido {
         joinColumns = @JoinColumn(name = "pedido_id"),
         inverseJoinColumns = @JoinColumn(name = "producto_id")
     )
-    private List<Productos> productos = new ArrayList<>();
-    
+    //private List<Productos> productos = new ArrayList<>();
+    private List<Productos> productos;
     @Column(nullable = false, precision = 10, scale = 2)
     private Long total;
     
@@ -136,6 +135,8 @@ public String getEstado() {
 public void setEstado(String estado) {
 	this.estado = estado;
 }
+
+
 
 
 }

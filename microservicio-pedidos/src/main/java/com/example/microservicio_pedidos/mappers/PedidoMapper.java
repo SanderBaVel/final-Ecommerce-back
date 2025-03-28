@@ -13,6 +13,7 @@ import com.example.microservicio_commons.models.entity.Productos;
 import com.example.microservicio_pedidos.clients.ClienteClient;
 import com.example.microservicio_pedidos.clients.ProductoClient;
 import com.example.microservicio_pedidos.dto.PedidoDTO;
+import com.example.microservicio_productos.dto.ProductosDto;
 
 @Component
 public class PedidoMapper {
@@ -25,43 +26,44 @@ public class PedidoMapper {
 	
 	
 	public Pedido dtotoEntity(PedidoDTO dto) {
-		if(dto == null) {
-			return null;
-		}
-		
-		
-		Optional<Clientes> optClinte = Optional.of(clienteFeign.getClienteById(dto.getIdCliente()));
-		if(optClinte.isEmpty()) {
-			return null;
-		}
-		if(dto.getProductosIds().isEmpty()) {
-			throw new RuntimeException("Cliente no encontrado con ID: " + dto.getIdCliente());
-			}
-		System.out.println(dto);
-		Pedido pedido = new Pedido();
-		pedido.setCliente(optClinte.get());
-		pedido.setEstado(dto.getEstado());
-		
-		
-        List<Productos> productos = obtenerProductos(dto.getProductosIds());
-        pedido.setProductos(productos);
-		return pedido;
-		
-	}
-		
-	  private List<Productos> obtenerProductos(List<Long> productosIds) {
-	        List<Productos> productos = new ArrayList<>();
-	        
-	        for (Long productoId : productosIds) {
-	            Productos producto = productoClient.getProductoById(productoId);
-	            if (producto != null) {
-	                productos.add(producto);
-	            } else {
-	                throw new RuntimeException("Producto no encontrado con ID: " + productoId);
-	            }
-	        }
-	        
-	        return productos;
+	  
+	    Clientes cliente = clienteFeign.getClienteById(dto.getCliente());
+	    if (cliente == null) {
+	        throw new RuntimeException("Cliente no encontrado con ID: " + dto.getCliente());
 	    }
+
+	    // Verificar si los productos existen
+	    List<Productos> productos = obtenerProductos(dto.getProductosIds());
+	    if (productos.isEmpty()) {
+	        throw new RuntimeException("Productos no encontrados para los IDs: " + dto.getProductosIds());
+	    }
+
+	    Pedido pedido = new Pedido();
+	    pedido.setCliente(cliente);
+	    pedido.setEstado(dto.getEstado());
+	    pedido.setProductos(productos);
+
+	    return pedido;
+	}
+
+    private List<Productos> obtenerProductos(List<ProductosDto> list) {
+        List<Productos> productos = new ArrayList<>();
+        for (ProductosDto productoId : list) {
+            Productos producto = productoClient.getProductoById(productoId);
+            if (producto != null) {
+                productos.add(producto);
+            } else {
+                throw new RuntimeException("Producto no encontrado con ID: " + productoId);
+            }
+        }
+        return productos;
+    }
+	
+	
+	
+	
+	
+	
+	
 	}
 
